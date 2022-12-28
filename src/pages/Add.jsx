@@ -8,11 +8,9 @@ export default function Add() {
     cover: "",
   });
   const handleChange = (e) => {
-    setBook((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  console.log(book);
   return (
     <div className="form">
       <h1>Add books</h1>
