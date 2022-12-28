@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
@@ -6,7 +7,6 @@ export default function Books() {
     const fetchBooks = async () => {
       const res = await fetch("http://localhost:5000/books");
       const data = await res.json();
-      console.log(data);
       setBooks(data);
     };
     fetchBooks();
@@ -14,9 +14,12 @@ export default function Books() {
 
   return (
     <div>
+      <button>
+        <Link to="/add">Add Books</Link>
+      </button>
       {books &&
-        books.map((book, i) => (
-          <div key={i}>
+        books.map((book) => (
+          <div key={book.id}>
             <h1>{book.title}</h1>
             <p>{book.desc}</p>
             <p>{book.cover}</p>
