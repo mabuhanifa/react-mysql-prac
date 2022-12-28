@@ -5,11 +5,12 @@ export default function Books() {
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await fetch("http://localhost:5000/books");
-      const data = res.json();
+      const data = await res.json();
+      console.log(data)
       setBooks(data);
     };
     fetchBooks();
   }, []);
-  console.log(books);
+ 
   return <div>Books</div>;
 }
