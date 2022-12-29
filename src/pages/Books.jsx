@@ -11,20 +11,34 @@ export default function Books() {
     };
     fetchBooks();
   }, []);
-
+  const handleDelete = async (id) => {
+    try {
+      const book = await fetch(`http://localhost:5000/books/${id}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <button>
         <Link to="/add">Add Books</Link>
       </button>
-      {books &&
-        books.map((book) => (
-          <div key={book.id}>
-            <h1>{book.title}</h1>
-            <p>{book.desc}</p>
-            <p>{book.cover}</p>
-          </div>
-        ))}
+      <div className="books">
+        {books &&
+          books.map((book) => (
+            <div key={book.id}>
+              <h1>{book.title}</h1>
+              <p>{book.desc}</p>
+              <p>{book.cover}</p>
+              <button onClick={() => handleDelete(book.id)}>Delete</button>
+              <button>
+                <Link to={"/update"}>Update</Link>
+              </button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
