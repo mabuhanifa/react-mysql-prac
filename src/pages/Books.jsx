@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Books() {
-  
   const [books, setBooks] = useState([]);
 
   const fetchBooks = async () => {
@@ -38,7 +37,7 @@ export default function Books() {
               <p>{book.cover}</p>
               <button onClick={() => handleDelete(book.id)}>Delete</button>
               <button>
-                <Link to={"/update"}>Update</Link>
+                <Link to={`/update/${book.id}`}>Update</Link>
               </button>
             </div>
           ))}
