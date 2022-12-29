@@ -1,43 +1,66 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Add() {
+const Add = () => {
   const [book, setBook] = useState({
     title: "",
     desc: "",
     price: null,
     cover: "",
   });
+  const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  console.log(book);
+  
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/books", book);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
+  };
+
   return (
     <div className="form">
-      <h1>Add books</h1>
+      <h1>Add New Book</h1>
       <input
         type="text"
-        placeholder="title"
+        placeholder="Book title"
         name="title"
-        onClick={handleChange}
+        onChange={handleChange}
       />
-      <input
+      <textarea
+        rows={5}
         type="text"
-        placeholder="desc"
+        placeholder="Book desc"
         name="desc"
-        onClick={handleChange}
+        onChange={handleChange}
       />
       <input
         type="number"
-        placeholder="price"
+        placeholder="Book price"
         name="price"
-        onClick={handleChange}
+        onChange={handleChange}
       />
       <input
         type="text"
-        placeholder="cover"
+        placeholder="Book cover"
         name="cover"
-        onClick={handleChange}
+        onChange={handleChange}
       />
+      <button onClick={handleClick}>Add</button>
+      {error && "Something went wrong!"}
+      <Link to="/">See all books</Link>
     </div>
   );
-}
+};
+
+export default Add;

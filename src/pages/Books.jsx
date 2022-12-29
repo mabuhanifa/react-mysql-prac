@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Books() {
+  
   const [books, setBooks] = useState([]);
+
+  const fetchBooks = async () => {
+    const res = await fetch("http://localhost:5000/books");
+    const data = await res.json();
+    setBooks(data);
+  };
   useEffect(() => {
-    const fetchBooks = async () => {
-      const res = await fetch("http://localhost:5000/books");
-      const data = await res.json();
-      setBooks(data);
-    };
     fetchBooks();
   }, []);
+
   const handleDelete = async (id) => {
     try {
       const book = await fetch(`http://localhost:5000/books/${id}`, {
         method: "DELETE",
       });
+      fetchBooks();
     } catch (error) {
       console.log(error);
     }
