@@ -12,7 +12,7 @@ export default function Books() {
   useEffect(() => {
     fetchBooks();
   }, []);
-
+console.log(books);
   const handleDelete = async (id) => {
     try {
       const book = await fetch(`http://localhost:5000/books/${id}`, {
@@ -34,6 +34,7 @@ export default function Books() {
             <div key={book.id}>
               <h1>{book.title}</h1>
               <p>{book.desc}</p>
+              <p>{book.price}</p>
               <p>{book.cover}</p>
               <button onClick={() => handleDelete(book.id)}>Delete</button>
               <button>

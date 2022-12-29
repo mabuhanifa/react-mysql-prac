@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Update = () => {
   const [book, setBook] = useState({
@@ -9,19 +9,19 @@ const Update = () => {
     price: null,
     cover: "",
   });
-  
   const [error, setError] = useState(false);
-
   const navigate = useNavigate();
+
+  const { id } = useParams();
 
   const handleChange = (e) => {
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
   const handleClick = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("http://localhost:5000/books", book);
+      await axios.put(`http://localhost:5000/books/${id}`, book);
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -31,7 +31,7 @@ const Update = () => {
 
   return (
     <div className="form">
-      <h1>Update Book</h1>
+      <h1>Update the Book</h1>
       <input
         type="text"
         placeholder="Book title"
